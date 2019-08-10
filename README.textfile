@@ -1,0 +1,52 @@
+h2. Project Management
+
+Rails Version - 5.2
+Ruby Version - 2.5.3
+
+h2. Setup Steps
+
+h4. Clone
+
+You can clone the GitHub repo.
+
+To clone:
+
+<pre>
+$ git@github.com:akashkinwad/project-management.git
+</pre>
+
+h4. Gem Setup & Database Setup
+
+Go to project-management folder and Run
+
+<pre>
+$ bundle install
+</pre>
+
+Added sqlite file so no need to run migration or seed data. You can directly access to project
+
+h4. Run Application
+
+<pre>
+$ rails server
+</pre>
+
+h4. Run Application
+
+Open Browser and paste below link
+
+<pre>
+http://localhot:3000/
+</pre>
+
+h4. Admin Login
+
+Email    : admin@example.com
+Password : 12345678
+
+h4. Developer Login
+
+Email    : daniel@example.com
+Password : 12345678
+
+You can see the list of other developers on admin panel.

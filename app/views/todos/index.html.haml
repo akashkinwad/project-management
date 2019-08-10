@@ -1,0 +1,23 @@
+%h1 Listing todos
+
+%table.table.table-hover
+  %thead.thead-light
+    %tr
+      %th Description
+      %th Status
+      %th Developer
+      %th Action
+  %tbody
+    - @todos.each do |todo|
+      %tr
+        %td= todo.description
+        %td= todo.status.titleize
+        %td= todo.developer.email
+        %td
+          = link_to 'Show', project_todo_path(@project, todo), class: 'btn btn-primary'
+          = link_to 'Edit', edit_project_todo_path(@project, todo), class: 'btn btn-info'
+          = link_to 'Destroy', project_todo_path(@project, todo), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+%br
+
+= link_to 'New Todo', new_project_todo_path(@project), class: 'btn btn-success'

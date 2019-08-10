@@ -1,0 +1,19 @@
+.container
+  .row
+    %h3 Developers
+    .column
+      
+  %table.table.table-hover
+    %thead.thead-light
+      %tr
+        %th Email
+        %th Projects's count
+        %th ToDo's count
+        %th Action
+    %tbody
+      - @developers.each do |developer|
+        %tr
+          %td= developer.email
+          %td= developer.todos.count
+          %td= developer.projects.count
+          %td= link_to 'Details', user_path(developer), class: 'btn btn-info'

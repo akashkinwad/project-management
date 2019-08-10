@@ -1,0 +1,61 @@
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %script{src: "https://www.gstatic.com/charts/loader.js", type: "text/javascript"}
+    :javascript
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(implementCharts);
+
+      function implementCharts(data) {
+        $.ajax({
+          url: "/projects/details",
+          dataType: "json",
+          type: "GET",
+          contentType: "application/json; charset=utf-8",
+          success: function (data) {
+            for(var project_id in data) {
+              drawChart(project_id, data[project_id])
+            }
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert('Something went wrong!');
+          }
+        });
+      }
+
+      function drawChart(project_id, data) {
+        var done_count = data[0];
+        var inprogress_count = data[1];
+        var new_count = data[2];
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Count per Status'],
+          ['Done', done_count],
+          ['In Progress', inprogress_count],
+          ['New', new_count]
+        ]);
+        var options = {
+          title: "ToDo's Count per Status",
+          width:380,
+          height:300
+        };
+        var project = "piechart_project_" + project_id
+        console.log("project : " + project);
+        var chart = new google.visualization.PieChart(document.getElementById(project));
+        chart.draw(data, options);
+      }
+
+  %body
+    %table.columns
+    - projects.in_groups_of(3, false) do |row|
+      .row
+        - for project in row
+          .col-lg-4.col-md-4.col-xs-12.thumb
+            - if project.todos.present?
+              %h4
+                = project.title
+              .chart{id: "piechart_project_#{project.id}"}
+            - else
+              %h4
+                = project.title
+              .empty_chart
+                .empty_text No ToDO's Present

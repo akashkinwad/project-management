@@ -1,0 +1,34 @@
+%h1 All Projects
+
+.table-responsive
+  %table.table.table-hover
+    %thead.thead-light
+      %tr
+        %th Title
+        %th ToDo's Count
+        %th Developer's Count
+        %th Actions
+    %tbody
+      - @projects.each do |project|
+        %tr
+          %td= project.title
+          %td= project.todos.count
+          %td= project.developers.count
+          %td
+            .row
+              .dropdown.col-sm-3
+                %button.btn.btn-warning.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+                  Options
+                .dropdown-menu
+                  %li= link_to "List ToDo's", project_todos_path(project)
+                  %li= link_to 'Add ToDo', new_project_todo_path(project)
+                  %li= link_to 'Add Developer', edit_project_path(project)
+              .dropdown.col-sm-3
+                %button.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
+                  Operations
+                .dropdown-menu
+                  %li= link_to 'Edit', edit_project_path(project)
+                  %li= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+= link_to 'New Project', new_project_path, class: 'btn btn-success'

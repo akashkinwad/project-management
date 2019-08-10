@@ -1,0 +1,27 @@
+.container-fluid
+  = form_for @project do |f|
+    - if @project.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+        %ul
+          - @project.errors.full_messages.each do |message|
+            %li= message
+
+    .form-group.row
+      %label.col-sm-2.col-form-label
+        = f.label :title
+      .col-sm-6
+        = f.text_field :title, class: 'form-control'
+
+    - if action_name == 'edit'
+      .form-group.row
+        %label.col-sm-2.col-form-label
+          Developers
+        .col-sm-6
+          = f.collection_select(:developer_ids, User.developer.collect, :id, :email, { include_blank: "Select developers" }, { class: 'search-and-select form-control', multiple: true })
+
+    .form-group.actions.row
+      .col-sm-2
+        = f.submit 'Save', class: 'btn btn-success'
+      .col-sm-2
+        = link_to 'Back', projects_path, class: 'btn btn-info'

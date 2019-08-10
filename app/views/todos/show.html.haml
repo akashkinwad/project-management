@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Description:
+  = @todo.description
+%p
+  %b Status:
+  = @todo.status
+%p
+  %b User:
+  = @todo.developer.email
+
+= link_to 'Edit', edit_project_todo_path(@todo.project, @todo), class: 'btn btn-info'
+\|
+= link_to 'Back', project_todos_path(@todo.project), class: 'btn btn-warning'

@@ -1,0 +1,27 @@
+.container-fluid
+%h3
+  = @user.email
+
+%br
+- if @todos.present?
+  %table.table.table-hover
+    %thead.thead-light
+      %tr
+        %th Project
+        %th Description
+        %th Status
+        %th Actions
+
+    %tbody
+      - @todos.each do |todo|
+        %tr
+          %td= todo.project.title
+          %td= todo.description
+          %td= todo.status.titleize
+          %td
+            = link_to 'Change Status', edit_project_todo_path(todo.project, todo), class: 'btn btn-info'
+- else
+  %h4 No ToDo's Assigned
+%br
+- if current_user.admin?
+  = link_to 'Back', users_path, class: 'btn btn-warning'          

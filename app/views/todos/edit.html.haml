@@ -1,0 +1,25 @@
+.container-fluid
+  %h1 Change Status
+  = form_for [@project, @todo] do |f|
+    - if @todo.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@todo.errors.count, "error")} prohibited this todo from being saved:"
+        %ul
+          - @todo.errors.full_messages.each do |message|
+            %li= message
+
+    .form-group.row
+      = f.hidden_field :project_id, value: @project.id
+
+    .form-group.row
+      %label.col-sm-2.col-form-label
+        = f.label :status
+      .col-sm-10
+        = f.select :status, Todo.statuses.map {|key, value| [key.titleize, key]}, { prompt: 'Change Status'}, class: 'form-control', required: true
+        
+    .form-group.actions.row
+      .col-sm-2
+        = f.submit 'Save', class: 'btn btn-success'
+      .col-sm-2
+        = link_to 'Back', project_todo_path(@project, @todo), class: 'btn btn-info'
+

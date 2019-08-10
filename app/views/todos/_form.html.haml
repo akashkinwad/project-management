@@ -1,0 +1,28 @@
+.container-fluid
+  = form_for [@project, @todo] do |f|
+    - if @todo.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@todo.errors.count, "error")} prohibited this todo from being saved:"
+        %ul
+          - @todo.errors.full_messages.each do |message|
+            %li= message
+
+    .form-group.row
+      = f.hidden_field :project_id, value: @project.id
+      %label.col-sm-2.col-form-label
+        = f.label :description
+      .col-sm-6
+        = f.text_field :description, class: 'form-control-plaintext form-control'
+
+    .form-group.row
+      %label.col-sm-2.col-form-label
+        = f.label :developer
+      .col-sm-6
+        = f.collection_select(:user_id, @project.developers.collect, :id, :email, {include_blank: "Select developer"}, { class: 'form-control' })
+
+    .form-group.actions.row
+      .col-sm-2
+        = f.submit 'Save', class: 'btn btn-success'
+      .col-sm-2
+        = link_to 'Back', project_todos_path(@project), class: 'btn btn-info'
+

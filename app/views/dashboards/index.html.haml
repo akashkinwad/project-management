@@ -1,0 +1,39 @@
+%h3 Welcome To Project Management
+%br
+
+%table.table.dashboard_table
+  %tr.border-bottom.dashed
+    %th.dashed.bold-text Status
+    - @projects.each do |project|
+      %th.dashed.bold-text
+        = project.title
+
+  %tr.border-bottom.dashed
+    %td.dashed.bold-text Done
+    - @projects.each do |project|
+      %td.dashed
+        %ul{style: 'list-style-type: none;'}
+          - project.todos.done.each do |todo|
+            %li.li-item
+              = todo.description
+
+  %tr.border-bottom.dashed
+    %td.dashed.bold-text In Progress
+    - @projects.each do |project|
+      %td.dashed
+        %ul{style: 'list-style-type: none;'}
+          - project.todos.in_progress.each do |todo|
+            %li.li-item
+              = todo.description
+
+  %tr.border-bottom.dashed
+    %td.dashed.bold-text New
+    - @projects.each do |project|
+      %td.dashed
+        %ul{style: 'list-style-type: none;'}
+          - project.todos.assigned.each do |todo|
+            %li.li-item
+              = todo.description
+
+%br
+= render partial: 'index', locals: {projects: @projects}

@@ -36,7 +36,7 @@ h4. Run Application
 Open Browser and paste below link
 
 <pre>
-http://localhot:3000/
+http://localhost:3000/
 </pre>
 
 h4. Admin Login

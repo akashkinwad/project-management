@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_10_10_033848) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -19,8 +22,8 @@ ActiveRecord::Schema.define(version: 2019_10_10_033848) do
   end
 
   create_table "projects_users", id: false, force: :cascade do |t|
-    t.integer "project_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
     t.index ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id"
     t.index ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id"
   end
@@ -28,8 +31,8 @@ ActiveRecord::Schema.define(version: 2019_10_10_033848) do
   create_table "todos", force: :cascade do |t|
     t.string "description"
     t.integer "status"
-    t.integer "user_id"
-    t.integer "project_id"
+    t.bigint "user_id"
+    t.bigint "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_todos_on_project_id"
@@ -47,4 +50,6 @@ ActiveRecord::Schema.define(version: 2019_10_10_033848) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "todos", "projects"
+  add_foreign_key "todos", "users"
 end

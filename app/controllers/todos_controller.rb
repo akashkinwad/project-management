@@ -1,5 +1,4 @@
 class TodosController < ApplicationController
-  before_action :authenticate_user!
   before_action :authorize_admin!, except: [:edit, :update]
   before_action :find_project, except: :count_per_status
   before_action :set_todo, only: [:show, :edit, :update, :destroy]

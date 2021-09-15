@@ -1,16 +1,24 @@
 default: &default
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: db/project_management_dev
+  database: project_management_dev
+  username: postgres
+  password: postgres
 
 test:
   <<: *default
-  database: db/project_management_test
+  database: project_management_test
+  username: postgres
+  password: postgres
 
 production:
   <<: *default
-  database: db/project_management_production
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
